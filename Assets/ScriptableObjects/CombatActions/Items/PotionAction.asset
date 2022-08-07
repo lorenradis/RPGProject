@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a603c12b6dc1b48fd98fd1428b82c2f3, type: 3}
+  m_Name: PotionAction
+  m_EditorClassIdentifier: 
+  actionName: Potion
+  attackPower: 0
+  healthRecoveryAmount: 40
+  magicRecoveryAmount: 0
+  accuracy: 200
+  statusChance: 30
+  critChance: 10
+  mpCost: 0
+  attackType: 0
+  statusToApply: 0
+  statusToRecover: 0
+  description: drank a potion

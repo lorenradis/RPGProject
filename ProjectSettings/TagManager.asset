@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - valleySpawn
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - PlayerInteractions
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 63214231
+    locked: 0
+  - name: BelowPlayer
+    uniqueID: 1198438045
+    locked: 0
+  - name: Objects
+    uniqueID: 1519901447
+    locked: 0
+  - name: AbovePlayer
+    uniqueID: 3770748367
+    locked: 0
+  - name: UI
+    uniqueID: 4160643033
+    locked: 0

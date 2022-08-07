@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd4a83140cf8a4a518aab11e2cf9433f, type: 3}
+  m_Name: MPPotion
+  m_EditorClassIdentifier: 
+  itemName: Mana Potion
+  isConsumable: 1
+  combatAction: {fileID: 11400000, guid: c2282623ac5ba459199f5fead21c1fc4, type: 2}
+  quantity: 50
+  maxStackSize: 99
+  purchasePrice: 20
+  sellPrice: 5
+  icon: {fileID: 21300000, guid: 394d5b8afd21b4520a058fb0d4165565, type: 3}
+  useInBattle: 1
+  useOutOfBattle: 1
+  itemDescription: Recovers 20 magic points.

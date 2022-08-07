@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fb7020ea49e54b0692574e7b7f5d786, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  HP:
+    statName: HP
+    recoverHealthSound: {fileID: 8300000, guid: b68ff818f010941ebaf9e2e7b082de98, type: 3}
+    currentBase: 0
+    maxBase: 0
+    totalCurrent: 5
+  MP:
+    statName: MP
+    recoverHealthSound: {fileID: 8300000, guid: b68ff818f010941ebaf9e2e7b082de98, type: 3}
+    currentBase: 0
+    maxBase: 0
+    totalCurrent: 4
+  Strength:
+    statName: Strength
+    baseValue: 18
+  Defense:
+    statName: Defense
+    baseValue: 14
+  Intelligence:
+    statName: Intelligence
+    baseValue: 13
+  Wisdom:
+    statName: Wisdom
+    baseValue: 14
+  Speed:
+    statName: Speed
+    baseValue: 12
+  Heart:
+    statName: Heart
+    baseValue: 18
+  Constitution:
+    statName: Constitution
+    baseValue: 14
+  accuracy: 100
+  currentStatus: 0
+  unitName: Player
+  icon: {fileID: 21300000, guid: 9a307ac76a7c6437798006702c46d0a2, type: 3}
+  portrait: {fileID: 0}
+  overworldAnimator: {fileID: 0}
+  battleAnimator: {fileID: 0}
+  numberKilled: 0
+  weapon: {fileID: 11400000, guid: 0a8a04a2f9e5b4a84909bdb87ac405b5, type: 2}
+  abilityUnlocks:
+  - levelToLearn: 3
+    abilityToLearn: {fileID: 11400000, guid: bdd16c24b04434e69866bff6834cc919, type: 2}
+  availableSpells: []
+  experience: 0
+  gold: 0
+  level: 2
+  moveMod: 0
+  isBoss: 0
