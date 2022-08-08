@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     private UIManager uiManager;
     [SerializeField]
     private SaveManager saveManager;
+    private ChestManager chestManager;
     public AudioManager audioManager;
     public EnemyManager enemyManager;
     public StoryProgression storyProgression;
@@ -32,6 +33,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         UIManager.instance = uiManager;
+        chestManager = GetComponent<ChestManager>();
+        ChestManager.instance = chestManager;
         enemyManager = GetComponent<EnemyManager>();
         EnemyManager.instance = enemyManager;
         audioManager = GetComponent<AudioManager>();

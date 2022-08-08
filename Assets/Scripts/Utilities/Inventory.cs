@@ -4,10 +4,28 @@ using System.Collections.Generic;
 [System.Serializable]
 public class Inventory
 {
-
     public List<Item> items = new List<Item>();
 
     private int maxItems = 48;
+
+    public bool HasRoom(Item item)
+    {
+        if (items.Count < maxItems)
+        {
+            return true;
+        }
+        if (item.maxStackSize > 1)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].itemName == item.itemName && items[i].quantity < item.maxStackSize + item.quantity)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     public bool AddItemToList(Item item)
     {
@@ -54,10 +72,10 @@ public class Inventory
 
     public void RemoveItemFromList(Item item)
     {
-        if(items.Contains(item))
+        if (items.Contains(item))
         {
             items.Remove(item);
         }
-        
+
     }
 }

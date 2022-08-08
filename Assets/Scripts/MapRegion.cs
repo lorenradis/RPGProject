@@ -40,7 +40,7 @@ public class MapRegion : MonoBehaviour
 
     public void OnActivate()
     {
-        Debug.Log("I done been activated");
+ //       Debug.Log("I done been activated");
         for (int i = 0; i < spawnRegions.Count; i++)
         {
             spawnRegions[i].Activate();
@@ -54,7 +54,7 @@ public class MapRegion : MonoBehaviour
 
     public void OnDeactivate()
     {
-        Debug.Log("I done been deactivated!");
+//        Debug.Log("I done been deactivated!");
         for (int i = 0; i < spawnRegions.Count; i++)
         {
             spawnRegions[i].Deactivate();
