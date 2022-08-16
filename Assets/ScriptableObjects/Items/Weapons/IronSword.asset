@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ada2014f6a84de28eac158b511e301, type: 3}
   m_Name: IronSword
   m_EditorClassIdentifier: 
+  itemName: Iron Sword
+  isConsumable: 0
   combatAction: {fileID: 11400000, guid: 47046985d381c4499af305986763555d, type: 2}
+  quantity: 0
+  maxStackSize: 1
+  purchasePrice: 100
+  sellPrice: 50
+  icon: {fileID: 0}
+  useInBattle: 0
+  useOutOfBattle: 0
+  itemDescription: 

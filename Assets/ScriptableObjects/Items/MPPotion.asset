@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Mana Potion
   isConsumable: 1
   combatAction: {fileID: 11400000, guid: c2282623ac5ba459199f5fead21c1fc4, type: 2}
-  quantity: 50
+  quantity: 1
   maxStackSize: 99
   purchasePrice: 20
   sellPrice: 5

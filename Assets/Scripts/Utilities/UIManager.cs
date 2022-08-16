@@ -101,6 +101,12 @@ public class UIManager
     private TextMeshProUGUI enemyDescriptionText;
 
 
+    [SerializeField]
+    private RectTransform shopKeeperPanel;
+    [SerializeField]
+    private ItemSlot[] shopItemSlots;
+    private ShopkeeperInteraction shopKeeper;
+
     public void ShowInGameMenu()
     {
         inGameMenuObject.gameObject.SetActive(true);
@@ -247,6 +253,30 @@ public class UIManager
             }
         }
         
+    }
+
+    public void ShowShopInventory(ShopkeeperInteraction _shopKeeper)
+    {
+        shopKeeperPanel.gameObject.SetActive(true);
+        shopKeeper = _shopKeeper;
+        for (int i = 0; i < shopItemSlots.Length; i++)
+        {
+            if(i < shopKeeper.items.Count)
+            {
+                shopItemSlots[i].SetItem(shopKeeper.items[i]);
+                shopItemSlots[i].SetShopKeeper(shopKeeper);
+            }
+            else
+            {
+                shopItemSlots[i].gameObject.SetActive(false);
+            }
+        }
+        EventSystem.current.SetSelectedGameObject(shopItemSlots[0].gameObject);
+    }
+
+    public void HideShopInventory()
+    {
+        shopKeeperPanel.gameObject.SetActive(false);
     }
 
     public GameManager.GameState CloseCurrentMenu()

@@ -16,13 +16,15 @@ public class DialogManager : MonoBehaviour
     public AudioClip[] voiceClips;
 
     [SerializeField]
-    private Button button1; //confirm
+    private Button button1; //yes
     [SerializeField]
-    private Button button2; //deny
+    private Button button2; //no
     [SerializeField]
-    private Button button3; //misc
+    private Button button3; //cancel
     [SerializeField]
     private Button button4; //misc
+
+    private Button[] buttons = new Button[4];
 
     [SerializeField]
     private GameObject dialogPanel;
@@ -44,7 +46,6 @@ public class DialogManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI button4Text;
 
-    private Button[] buttons = new Button[2];
     private TextMeshProUGUI[] buttonTexts = new TextMeshProUGUI[4];
 
     private bool isActive = false;
@@ -64,18 +65,23 @@ public class DialogManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        buttons[0] = button1;
-        buttons[1] = button2;
-        //buttons[2] = button3;
-        //buttons[3] = button4;
-        buttonTexts[0] = button1Text;
-        buttonTexts[1] = button2Text;
-        //buttonTexts[2] = button3Text;
-        //buttonTexts[3] = button4Text;
     }
 
     private void Start()
     {
+        button1.gameObject.SetActive(false);
+        button2.gameObject.SetActive(false);
+        button3.gameObject.SetActive(false);
+        button4.gameObject.SetActive(false);
+        buttons[0] = button1;
+        buttons[1] = button2;
+        buttons[2] = button3;
+        buttons[3] = button4;
+        buttonTexts[0] = button1Text;
+        buttonTexts[1] = button2Text;
+        buttonTexts[2] = button3Text;
+        buttonTexts[3] = button4Text;
+
         dialogPanel.SetActive(false);
     }
 
@@ -102,6 +108,7 @@ public class DialogManager : MonoBehaviour
         dialogs.Add(newDialog);
         if (!isActive)
         {
+            Debug.Log("I received a dialog while inactive");
             GameManager.instance.EnterDialogState();
             dialogPanel.SetActive(true);
             isActive = true;
@@ -110,6 +117,22 @@ public class DialogManager : MonoBehaviour
         else
         {
             Debug.Log("I received a new dialog while active");
+        }
+    }
+
+    public void ShowDialog(Dialog newDialog, Action action1)
+    {
+        dialogs.Add(newDialog);
+        GameManager.instance.EnterDialogState();
+        EventSystem.current.SetSelectedGameObject(button1.gameObject);
+        AddCallbacks(action1);
+
+
+        dialogPanel.SetActive(true);
+        if (!isActive)
+        {
+            StartCoroutine(DisplayDialog());
+            isActive = true;
         }
     }
 
@@ -128,12 +151,50 @@ public class DialogManager : MonoBehaviour
         }
     }
 
+    public void ShowDialog(Dialog newDialog, Action action1, Action action2, Action action3)
+    {
+        dialogs.Add(newDialog);
+        GameManager.instance.EnterDialogState();
+        EventSystem.current.SetSelectedGameObject(button1.gameObject);
+        AddCallbacks(action1, action2, action3);
+
+        dialogPanel.SetActive(true);
+        if (!isActive)
+        {
+            StartCoroutine(DisplayDialog());
+            isActive = true;
+        }
+    }
+
+    public void ShowDialog(Dialog newDialog, Action action1, Action action2, Action action3, Action action4)
+    {
+        dialogs.Add(newDialog);
+        GameManager.instance.EnterDialogState();
+        EventSystem.current.SetSelectedGameObject(button1.gameObject);
+        AddCallbacks(action1, action2, action3, action4);
+
+        dialogPanel.SetActive(true);
+        if (!isActive)
+        {
+            StartCoroutine(DisplayDialog());
+            isActive = true;
+        }
+    }
+
+    private void AddCallbacks(Action action)
+    {
+        button1.onClick.RemoveAllListeners();
+        button1.onClick.AddListener(delegate
+        {
+            CloseDialogWindow();
+            action();
+        });
+    }
+
     private void AddCallbacks(Action action1, Action action2)
     {
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            buttons[i].onClick.RemoveAllListeners();
-        }
+        button1.onClick.RemoveAllListeners();
+        button2.onClick.RemoveAllListeners();
 
         button1.onClick.AddListener(delegate
         {
@@ -144,6 +205,58 @@ public class DialogManager : MonoBehaviour
         {
             CloseDialogWindow();
             action2();
+        });
+    }
+
+    private void AddCallbacks(Action action1, Action action2, Action action3)
+    {
+        button1.onClick.RemoveAllListeners();
+        button2.onClick.RemoveAllListeners();
+        button3.onClick.RemoveAllListeners();
+
+        button1.onClick.AddListener(delegate
+        {
+            CloseDialogWindow();
+            action1();
+        });
+        button2.onClick.AddListener(delegate
+        {
+            CloseDialogWindow();
+            action2();
+        });
+        button3.onClick.AddListener(delegate
+        {
+            CloseDialogWindow();
+            action3();
+        });
+    }
+
+    private void AddCallbacks(Action action1, Action action2, Action action3, Action action4)
+    {
+        button1.onClick.RemoveAllListeners();
+        button2.onClick.RemoveAllListeners();
+        button3.onClick.RemoveAllListeners();
+        button4.onClick.RemoveAllListeners();
+
+        button1.onClick.AddListener(delegate
+        {
+            CloseDialogWindow();
+            action1();
+        });
+        button2.onClick.AddListener(delegate
+        {
+            CloseDialogWindow();
+            action2();
+        });
+        button3.onClick.AddListener(delegate
+        {
+            CloseDialogWindow();
+            action3();
+        });
+        button4.onClick.AddListener(delegate
+        {
+            CloseDialogWindow();
+            action4();
         });
     }
 
@@ -172,11 +285,12 @@ public class DialogManager : MonoBehaviour
         {
             dialogText.maxVisibleCharacters = i;
             speedUp = Input.anyKey ? .5f : 1f;
-            if(dialog.isSpeech)
-                GameManager.instance.audioManager.PlaySoundEffect(voiceClips[UnityEngine.Random.Range(0, voiceClips.Length)]);
+            if (dialog.isSpeech)
+            {
+                //GameManager.instance.audioManager.PlaySoundEffect(voiceClips[UnityEngine.Random.Range(0, voiceClips.Length)]);
+            }
             yield return new WaitForSeconds(waitTime * speedUp);
         }
-
         bool waitingOnInput = true;
 
         if (dialog.responses.Length < 1)
@@ -188,6 +302,8 @@ public class DialogManager : MonoBehaviour
                 waitingOnInput = !Input.anyKeyDown;
                 yield return null;
             }
+
+            yield return null;
 
             if (dialogs.Count > 0)
             {
@@ -206,20 +322,30 @@ public class DialogManager : MonoBehaviour
                 buttons[i].gameObject.SetActive(true);
                 buttonTexts[i].text = dialog.responses[i];
             }
+            EventSystem.current.SetSelectedGameObject(buttons[0].gameObject);
+        }
+    }
+
+    private void ClearListeners()
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].onClick.RemoveAllListeners();
         }
     }
 
     private void CloseDialogWindow()
     {
+        ClearListeners();
         isActive = false;
         dialogPanel.SetActive(false);
         speakerPortraitImage.enabled = false;
         speakerNameText.text = "";
+        button1.gameObject.SetActive(false);
+        button2.gameObject.SetActive(false);
+        button3.gameObject.SetActive(false);
+        button4.gameObject.SetActive(false);
         GameManager.instance.ExitDialogState();
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            buttons[i].gameObject.SetActive(false); 
-        }
     }
 }
 

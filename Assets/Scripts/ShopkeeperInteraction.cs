@@ -4,95 +4,91 @@ using UnityEngine;
 
 public class ShopkeeperInteraction : Interactable
 {
-    public Dialog promptDialog;
-    public Dialog buySellDialog;
-    public Dialog whatToSellDialog;
-    public Dialog whatToBuyDialog;
-    public Dialog confirmSellDialog;
-    public Dialog successDialog;
-    public Dialog confirmBuyDialog;
-    public Dialog noMoneyDialog;
-    public Dialog continueDialog;
-    public Dialog endInteractionDialog;
-    /*
+    public string shopkeeperName;
+    public Sprite shopkeeperPortrait;
+
+    public Dialog greetingDialog; //hi, how can i help you? (buy, sell)
+    public Dialog whatToBuyDialog; //what would you like to buy? (confirm, cancel)
+    public Dialog whatToSellDialog; //what would you like to sell? (confirm, cancel)
+    public Dialog confirmSellDialog; //i'll buy it for x is that ok? (yes, no)
+    public Dialog confirmPurchaseDialog; //you can have it for x is that ok? (yes, no)
+    public Dialog successSellDialog; //thank you!
+    public Dialog successPurchaseDialog; //thank you!
+    public Dialog cancelDialog; //understood
+    public Dialog anythingElseDialog; //anything else? (buy, sell)
+    public Dialog notEnoughMoneyDialog;
+    public Dialog farewellDialog;
+
+    public List<Item> items = new List<Item>();
+
     public override void OnInteract(Transform player)
     {
-        ShowShopPrompt();
         base.OnInteract(player);
+        ShowGreeting();
     }
 
-    private void ShowShopPrompt()
+    private void ShowGreeting()
     {
-        DialogManager.instance.ShowDialog(promptDialog, () =>
-        {
-            AskBuyOrSell();
-        }, () =>
-        {
-            DialogManager.instance.ShowDialog(endInteractionDialog);
+        DialogManager.instance.ShowDialog(greetingDialog, () => {
+            ShowSellerInventory();
+        }, () => {
+            ShowPlayerInventory();
+        }, () => {
+            ShowFarewellDialog();
         });
     }
 
-    private void AskBuyOrSell()
+    private void ShowSellerInventory()
     {
-        DialogManager.instance.ShowDialog(buySellDialog, () =>
-        {
-            ShowShopInventory();
-        }, () =>
-        {
-            ShowSellableInventory();
-        });
+        GameManager.instance.ShowShopMenu(this);
     }
 
-    private void ShowSellableInventory()
+    private void ShowPlayerInventory()
     {
-        GameManager.instance.uiManager.DisplayInventory();
-        GameManager.instance.inventory.EnterSellMode();
-        DialogManager.instance.ShowDialog(whatToSellDialog, () =>
-        {
-            ConfirmSale();
-        }, () =>
-        {
-            GameManager.instance.uiManager.HideInventory();
-            GameManager.instance.inventory.EnterNormalMode();
-        });
+        UIManager.instance.ShowInventory();
     }
 
-    private void ShowShopInventory()
+    public void AttemptPurchase(Item item)
     {
-        Debug.Log("Showing the shop");
-    }
-
-    private void ConfirmSale()
-    {
-        if(GameManager.instance.inventory.selectedItems.Count > 0)
-        {
-            DialogManager.instance.ShowDialog(confirmSellDialog, () =>
+        DialogManager.instance.ShowDialog(confirmPurchaseDialog, () => {
+            if(GameManager.instance.playerInfo.gold >= item.purchasePrice)
             {
-                GameManager.instance.inventory.SellSelectedItems();
-                DialogManager.instance.ShowDialog(successDialog);
-                GameManager.instance.inventory.EnterNormalMode();
-                GameManager.instance.uiManager.HideInventory();
-                DialogManager.instance.ShowDialog(continueDialog, () =>
-                {
-                    AskBuyOrSell();
-                }, () =>
-                {
-                    DialogManager.instance.ShowDialog(endInteractionDialog);
-                });
-            }, () =>
+                GameManager.instance.playerInfo.SpendGold(item.purchasePrice);
+                GameManager.instance.inventory.AddItemToList(Instantiate(item));
+                DialogManager.instance.ShowDialog(successPurchaseDialog);
+                GameManager.instance.HideShopMenu();
+                ShowAnythingElse();
+            }
+            else
             {
-
-            });
-        }
-        else
-        {
-            ShowSellableInventory();
-        }
+                DialogManager.instance.ShowDialog(notEnoughMoneyDialog);
+                GameManager.instance.HideShopMenu();
+                ShowAnythingElse();
+            }
+        }, () => {
+            GameManager.instance.HideShopMenu();
+            ShowAnythingElse();
+        });
     }
 
-    private void ConfirmPurchase()
+    private void ShowAnythingElse()
+    {
+        DialogManager.instance.ShowDialog(anythingElseDialog, () => {
+            ShowSellerInventory();
+        }, () => {
+            ShowPlayerInventory();
+        }, () => {
+            ShowFarewellDialog();
+        });
+    }
+
+    public void AttemptSell(Item item)
     {
 
     }
-    */
+
+    private void ShowFarewellDialog()
+    {
+        DialogManager.instance.ShowDialog(farewellDialog);
+    }
 }

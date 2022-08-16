@@ -12,13 +12,42 @@ public class ItemSlot : MonoBehaviour
     private Sprite icon;
     [SerializeField]
     private TextMeshProUGUI itemText;
+    [SerializeField]
+    private TextMeshProUGUI priceText;
+    [SerializeField]
+    private TextMeshProUGUI quantityText;
+
+    private ShopkeeperInteraction shopKeeper;
 
     public void SetItem(Item _item)
     {
         item = _item;
         icon = item.icon;
-        image.sprite = icon;
-        itemText.text = item.itemName + " " + item.quantity;
+        itemText.text = item.itemName;
+        if (image != null)
+        {
+            image.sprite = icon;
+        }
+        if (priceText != null)
+        {
+            priceText.text = "$" + item.purchasePrice;
+        }
+        if (quantityText != null)
+        {
+            if(item.quantity > 1)
+            {
+                quantityText.text = "x" + item.quantity;
+            }
+            else
+            {
+                quantityText.text = "";
+            }
+        }
+    }
+
+    public void SetShopKeeper(ShopkeeperInteraction newShopKeeper)
+    {
+        shopKeeper = newShopKeeper;
     }
 
     public void EnableItemSlot()
@@ -32,6 +61,16 @@ public class ItemSlot : MonoBehaviour
     }
 
     public void SelectThisItem()
+    {
+
+    }
+
+    public void BuyThisItem()
+    {
+        shopKeeper.AttemptPurchase(item);
+    }
+
+    public void SellThisItem()
     {
 
     }

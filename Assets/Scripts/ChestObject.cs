@@ -21,7 +21,7 @@ public class ChestObject : Interactable
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         //instantiate the chest info so that we don't modify the copy living in the editor
-        chestInfo = ChestManager.instance.GetChestInfoByCode(uniqueCode);
+        chestInfo = GameManager.instance.chestManager.GetChestInfoByCode(uniqueCode);
         spriteRenderer.sprite = chestInfo.isOpen ? openSprite : closedSprite;
     }
 
@@ -58,6 +58,7 @@ public class ChestObject : Interactable
         if(chestInfo.gold > 0)
         {
             DialogManager.instance.ShowSimpleDialog("What luck, you found " + chestInfo.gold + " gold coins!");
+            GameManager.instance.playerInfo.GainGold(chestInfo.gold);
         }
     }
 }

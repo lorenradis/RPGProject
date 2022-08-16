@@ -9,12 +9,10 @@ public class StoryTrigger : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("Something triggered me");
         if (!isActive)
             return;
         if(collision.CompareTag("Player") && ConditionMet())
         {
-            Debug.Log("Something met the condition");
             OnConditionMet();
         }
     }

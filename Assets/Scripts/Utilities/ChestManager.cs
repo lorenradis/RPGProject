@@ -13,7 +13,7 @@ public class ChestManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Cloning the chests");
+
         for (int i = 0; i < sourceChestInfos.Length; i++)
         {
             chestInfos.Add(Instantiate(sourceChestInfos[i]));
@@ -22,9 +22,10 @@ public class ChestManager : MonoBehaviour
 
     public ChestInfo GetChestInfoByCode(int uniqueID)
     {
-        Debug.Log("finding a chest with the code " + uniqueID);
+
         for (int i = 0; i < chestInfos.Count; i++)
         {
+
             if(chestInfos[i].uniqueCode == uniqueID)
             {
                 return chestInfos[i];

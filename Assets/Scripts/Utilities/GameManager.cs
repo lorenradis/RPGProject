@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     private UIManager uiManager;
     [SerializeField]
     private SaveManager saveManager;
-    private ChestManager chestManager;
+    public ChestManager chestManager;
     public AudioManager audioManager;
     public EnemyManager enemyManager;
     public StoryProgression storyProgression;
@@ -230,8 +230,20 @@ public class GameManager : MonoBehaviour
     {
         uiManager.ShowKillsMenu();
         ChangeState(GameState.MENU);
-
     }
+
+    public void ShowShopMenu(ShopkeeperInteraction shopKeeper)
+    {
+        UIManager.instance.ShowShopInventory(shopKeeper);
+        ChangeState(GameState.MENU);
+    }
+
+    public void HideShopMenu()
+    {
+        UIManager.instance.HideShopInventory();
+        ChangeState(GameState.NORMAL);
+    }
+
 
     public void StartBattle(UnitInfo enemyInfo)
     {
@@ -277,6 +289,16 @@ public class GameManager : MonoBehaviour
     }
 
     public void ExitDialogState()
+    {
+        ChangeState(previousState);
+    }
+
+    public void EnterMenuState()
+    {
+        ChangeState(GameState.MENU);
+    }
+
+    public void ExitMenuState()
     {
         ChangeState(previousState);
     }

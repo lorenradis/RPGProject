@@ -153,7 +153,6 @@ public class BattleManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Player speed is " + playerUnit.Speed.Value);
                     playerTimer += playerUnit.Speed.Value;
                     if (enemyTimer >= actThreshold)
                     {
@@ -163,7 +162,6 @@ public class BattleManager : MonoBehaviour
                     else
                     {
                         enemyTimer += enemyUnit.Speed.Value;
-                        Debug.Log("Enemy speed is " + enemyUnit.Speed.Value);
                     }
                 }
                 break;

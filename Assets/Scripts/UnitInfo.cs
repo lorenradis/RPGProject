@@ -155,6 +155,11 @@ public class UnitInfo : ScriptableObject
         gold += amount;
     }
 
+    public void SpendGold(int amount)
+    {
+        gold -= amount;
+    }
+
     public void TakeDamage(int amount)
     {
         HP.Decrease(amount);
